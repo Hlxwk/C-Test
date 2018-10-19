@@ -1,18 +1,24 @@
 #include<iostream>
+#include<vector>
+#include<iterator>
 using namespace std;
+vector<int> a(3,0);
+void perm(int m)
+{
+    if(m==0)copy(a.begin(),a.end(),ostream_iterator<int>(cout," ")),cout<<endl;
+    for(int i=2;i>=0;--i)
+    {
+        if(!a[i])
+        {
+            a[i]=m;
+            //cout<<a[i]<<endl;
+            perm(m-1);
+            a[i]=0;
+        }
+    }
+}
 int main()
 {
-    int a,b,n;
-    cin>>a>>b>>n;
-    while(a||b||n)
-    {
-        int res[100]={0,1,1};
-        for(int i=3;i<=49;i++)
-        {
-            res[i]=(a*res[i-1]+b*res[i-2])%7;
-        }
-        cout<<res[n%49]<<endl;
-        cin>>a>>b>>n;
-    }
+    perm(3);
     return 0;
 }

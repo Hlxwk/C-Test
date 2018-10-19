@@ -28,3 +28,26 @@ int main()
     }
     return 0;
 }
+//递归解法
+#include<iostream>
+#include<algorithm>
+using namespace std;
+void select_sort(int i,int n,int* a)
+{
+    if(i==n)return ;
+    else{
+        int flag=i,value=*(a+i);
+        for(int j=i+1;j<n;++j)
+          *(a+j)<value?(value=*(a+j))&&(flag=j):1;
+        swap(*(a+i),*(a+flag));
+        select_sort(i+1,n,a);
+    }
+}
+int main()
+{
+    int a[]={5,4,3,2,1};
+    select_sort(0,5,a);
+    for(int i=0;i<5;i++)
+    cout<<a[i]<<endl;
+    return 0;
+}
