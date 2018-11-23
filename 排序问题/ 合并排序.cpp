@@ -1,42 +1,41 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
+#include<iterator>
 using namespace std;
-void Merge(int a[],int p,int q,int r)
+void merge(vector<int>& A,int left,int middle,int right)
 {
-    int n1=q-p+1;
-    int n2=r-q-1+1;
-    int L[100],R[100];
-    for(int i=0;i<n1;i++)
-        L[i]=a[p+i];
-    for(int i=0;i<n2;i++)
-        R[i]=a[q+1+i];
-    L[n1]=9999;
-    R[n2]=9999;// be sure for inserting in a;
+    vector<int> tmp1;
+    tmp1.insert(tmp1.begin(),A.begin()+left,A.begin()+middle+1);
+    vector<int> tmp2;
+    tmp2.insert(tmp2.begin(),A.begin()+middle+1,A.begin()+right+1);
+    tmp1.push_back(9999);
+    tmp2.push_back(9999);
     int i=0,j=0;
-    for(int k=p;k<=r;k++)
+    int m=left;
+    while(i<tmp1.size()-1||j<tmp2.size()-1)
     {
-        if(L[i]<=R[j])a[k]=L[i++];
-        else a[k]=R[j++];
+        if(tmp1[i]<=tmp2[j])
+        A[m]=tmp1[i++];
+        else
+        A[m]=tmp2[j++];
+        m++;
     }
 }
-void Mergesort(int a[],int p,int r)
+void merge_sort(vector<int>& A,int left,int right)
 {
-    if(p<r)
+    if(left<right)
     {
-        int q=(r+p)/2;
-        Mergesort(a, p, q);
-        Mergesort(a, q+1, r);
-        Merge(a,p,q,r);
-        
+        int p=(right+left)/2;
+        merge_sort(A,left,p);
+        merge_sort(A,p+1,right);
+        merge(A,left,p,right);
     }
 }
 int main()
 {
-    int n,a[100];
-    cin>>n;
-    for(int i=0;i<n;i++)
-        cin>>a[i];
-    Mergesort(a, 0, n-1);
-    for(int i=0;i<n;i++)
-        cout<<a[i]<<" ";
+    int a[]={9,8,7,6,5,4,3,2,1};
+    vector<int> A(a,a+9);
+    merge_sort(A,0,8);
+    copy(A.begin(),A.end(),ostream_iterator<int>(cout," "));
     cout<<endl;
 }

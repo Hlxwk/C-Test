@@ -1,11 +1,12 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 using namespace std;
 const int graph[5][5]=//用于图的宽度深遍历
 {
     0,1,0,1,0,
     1,0,1,1,0,
-    0,1,0,1,1,
+    0,1,0,0,1,
     1,1,1,0,0,
     0,0,1,0,0
 };
@@ -57,6 +58,30 @@ void DFS(int i,int m)//回溯法
     {
         if(!visited2[a]&&graph[i][a])DFS(a, m);
     }
+}
+void DFS2(int i,int m)
+{
+    stack<int> s;
+    s.push(i);
+    cout<<i<<" ";
+    visited2[i]=1;
+    while(!s.empty())
+    {
+        int flag=1;
+        for(int a=0;a<m;a++)
+        {
+            if(!visited2[a]&&graph[s.top()][a])
+            {
+                cout<<a<<" ";
+                s.push(a);
+                visited2[a]=1;
+                flag=0;
+                break;
+            }
+        }
+        if(flag)s.pop();
+    }
+
 }
 void Init_Single_Source(int s)//s为源点
 {
@@ -139,23 +164,22 @@ void Dijkstra(int s)
 }
 int main()
 {
-    /*
     BFS(0, 5);
     cout<<endl;
-    DFS(0,5);
-    cout<<endl;
-    
-    if(BellmanFord(0))
-    {
-        for(int i=0;i<5;i++)
-        cout<<d[i]<<" ";
-    }
-    //cout<<"false!";
-    cout<<endl;
-    */
-    Dijkstra(0);
-    for(int i=0;i<5;i++)
-    cout<<d[i]<<" ";
-    cout<<endl;
+    // DFS(0,5);
+    // cout<<endl;
+    DFS2(0,5);
+    cout<<endl;    
+    // // if(BellmanFord(0))
+    // // {
+    // //     for(int i=0;i<5;i++)
+    // //     cout<<d[i]<<" ";
+    // // }
+    // //cout<<"false!";
+    // cout<<endl;
+    // Dijkstra(0);
+    // for(int i=0;i<5;i++)
+    // cout<<d[i]<<" ";
+    // cout<<endl;
     return 0;
 }
