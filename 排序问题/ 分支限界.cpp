@@ -10,7 +10,19 @@ struct node
     int lchild;
     int parent;
 };
+struct node1
+{
+  
+    int weight;
+    bool operator < (const node1 &a)
+    {
+        return weight<a.weight;
+    }
+};
+
+
 queue<node> q;
+priority_queue<node1> q2;
 node node1[20];
 vector<int> bestx(10);
 void SaveQueue(int wt,int i,int j,int n,int& bestw,int pre,int& bestE,int ch)
